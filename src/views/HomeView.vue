@@ -1,6 +1,8 @@
 <template>
-  <div class="home">
-    <h2>{{ appTitle }}</h2>
+  <div class="home" ref="myDiv">
+
+    <h2 ref="appTitleRef">{{ appTitle }}</h2>
+
     <h3>{{ counterData.title }}</h3>
 
     <div>
@@ -15,15 +17,22 @@
 
     <div class="edit">
       <h4>Edit counter title:</h4>
-      <input v-model="counterData.title" type="text" />
+      <input v-model="counterData.title" type="text" v-autofocus/>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref, computed } from "vue";
+import { reactive, ref, computed, onMounted, nextTick } from "vue";
+import { vAutofocus } from "@/directives/vAutofocus";
 
 const appTitle = "My Amazing Counter App";
+
+const appTitleRef = ref(null)
+
+onMounted(()=> {
+  console.log(appTitleRef.value.offsetWidth);
+})
 
 // const counter = ref(0),
 // counterTitle = ref("My Counter");
@@ -41,6 +50,9 @@ const oddOrEven = computed(() => {
 
 const increaseCounter = (amount) => {
   counterData.count += amount;
+  this.$nextTick(() => {
+    
+  })
 };
 
 const decreaseCounter = (amount) => {

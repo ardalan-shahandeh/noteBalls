@@ -5,13 +5,15 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <nav>
     <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
+    <RouterLink to="/modals">Modals</RouterLink>
+    <RouterLink to="/posts">Posts</RouterLink>
   </nav>
 
   <RouterView />
 </template>
  
 <style scoped>
+
 header {
   line-height: 1.5;
   max-height: 100vh;
