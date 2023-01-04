@@ -1,11 +1,21 @@
 <template>
-  <div class="card mb-3 bg-light">
+  <div 
+    class="card mb-3"
+    :class="`bg-${ bgColor }`"
+  >
+    <label 
+      v-if="label"
+      class="label text-white p-3"
+    >
+      {{label}}
+    </label>
+
     <div class="card-body">
       <p class="card-text">
         <textarea
           v-model="value"
           class="w-100"
-          placeholder="Add a new note"
+          :placeholder="placeholder"
           ref="textareaRef"
         />
       </p>
@@ -20,10 +30,11 @@
 import { computed } from "vue";
 import { ref } from "vue";
 
-/*props*/ 
-const props = defineProps(["modelValue"]);
+/*props*/
+const props = defineProps(["modelValue", "bgColor", "placeholder", "label"]);
 
 /*emits*/
+
 const emit = defineEmits(["update:modelValue"]);
 
 const value = computed({
@@ -32,20 +43,20 @@ const value = computed({
   },
   set(value) {
     emit("update:modelValue", value);
-  },
+  }
 });
 
 /*
   focus textArea
 */
 
-const textareaRef = ref(null)
+const textareaRef = ref(null);
 
 const focusTextarea = () => {
   textareaRef.value.focus();
 };
 
 defineExpose({
-   focusTextarea
-})
+  focusTextarea,
+});
 </script>
