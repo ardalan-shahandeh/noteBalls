@@ -10,10 +10,16 @@
         </div>
       </div>
       <div class="card-footer">
-        <a href="#" type="button" class="btn btn-success mr-3"> Edit </a>
+        <RouterLink
+          :to="`/editNote/${ note.id }`"
+          href="#"
+          class="btn btn-success mr-3"
+        > 
+          Edit
+        </RouterLink>
 
         <a
-          @click.prevent="handleDeleteClick"
+          @click.prevent="storeNotes.deleteNote(note.id)"
           href="#"
           type="button"
           class="btn btn-danger mr-3"
@@ -29,6 +35,7 @@
 /* import*/
 
 import { computed } from "vue";
+import { useStoreNotes } from "@/stores/storeNotes";
 
 /*props*/
 
@@ -39,9 +46,11 @@ const props = defineProps({
   },
 });
 
-//emits
+/*
+  store
+*/
 
-const emit = defineEmits(["deleteClicked"]);
+const storeNotes = useStoreNotes();
 
 // characterLength
 
@@ -51,9 +60,4 @@ const characterLength = computed(() => {
   return `${length} ${description}`;
 });
 
-// handleDeleteClick
-
-const handleDeleteClick = () => {
-  emit("deleteClicked", props.note.id);
-};
 </script>

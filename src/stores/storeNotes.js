@@ -5,15 +5,15 @@ export const useStoreNotes = defineStore('storeNotes', {
     return { 
       notes: [
         {
-          id: '123',
+          id: 'id1',
           content: 'test stersst astqwet'
         },
         {
-          id: '456',
+          id: 'id2',
           content: 'this is sample test'
         },
-        {
-          id: '789',
+        {  
+          id: 'id3',
           content: 'this text for my friends'
         }
       ]
@@ -22,7 +22,7 @@ export const useStoreNotes = defineStore('storeNotes', {
   actions: {
     addNote(newNoteContent) {
       let currentDate = new Date().getTime();
-      id = currentDate.toString();
+      let id = currentDate.toString();
     
       let note = {
         id,
@@ -30,6 +30,11 @@ export const useStoreNotes = defineStore('storeNotes', {
       };
     
       this.notes.unshift(note);
+    },
+    deleteNote(idToDelete) {
+      this.notes = this.notes.filter((note) => {
+        return note.id !== idToDelete;
+      });
     }
   }
 })

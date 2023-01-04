@@ -1,6 +1,23 @@
 <template>
   <div class="notes">
-    <div class="card mb-3 bg-light">
+    <AddEditNote 
+      v-model="newNote"
+      ref="addEditNoteRef"
+    >
+      <template #buttons>
+        <button
+          @click="addNote"
+          :disabled="!newNote"
+          class="btn btn-success mr-3"
+        >
+          Add New Note
+        </button>
+      </template>
+    </AddEditNote>
+
+    <Note v-for="note in storeNotes.notes" :key="note.id" :note="note" />
+
+    <!-- <div class="card mb-3 bg-light">
       <div class="card-body">
         <p class="card-text">
           <textarea
@@ -12,35 +29,15 @@
         </p>
         <div class="card-footer text-right">
           <button
-            @click="storeNotes.addNote"
-            type="button"
-            class="btn btn-success mr-3"
+            @click="addNote"
             :disabled="!newNote"
+            class="btn btn-success mr-3"
           >
             Add New Note
           </button>
         </div>
       </div>
-    </div>
-
-    <!-- <div class="card mb-3 bg-light" v-for="note in notes" :key="note.id">
-      <div class="card-body">
-        <p class="card-text">
-          {{ note.content }}
-        </p>
-        <div class="card-footer">
-          <button type="button" class="btn btn-success mr-3">Edit</button>
-          <button type="button" class="btn btn-success mr-3">Decline</button>
-        </div>
-      </div>
     </div> -->
-
-    <Note
-      v-for="note in notes"
-      :key="note.id"
-      :note="note"
-      @deleteClicked="deleteNote"
-    />
   </div>
 </template>
 
@@ -51,6 +48,7 @@
 
 import { ref } from "vue";
 import Note from "@/components/Notes/Note.vue";
+import AddEditNote from "@/components/Notes/AddEditNote.vue";
 import { useStoreNotes } from "@/stores/storeNotes";
 
 /*
@@ -64,23 +62,12 @@ const storeNotes = useStoreNotes();
 */
 
 const newNote = ref("");
-const newNoteRef = ref(null);
+const addEditNoteRef = ref(null)
+
 
 const addNote = () => {
-
-  storeNotes.addNote(newNote.value)
- 
+  storeNotes.addNote(newNote.value);
   newNote.value = "";
-  newNoteRef.value.focus();
-};
-
-// delete Note
-
-const deleteNote = (idToDelete) => {
-  notes.value = notes.value.filter((note) => {
-    return note.id !== idToDelete;
-  });
+  addEditNoteRef.value.focusTextarea()
 };
 </script>
-
-<style lang="scss" scoped></style>
