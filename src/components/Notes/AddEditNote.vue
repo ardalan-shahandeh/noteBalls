@@ -17,6 +17,7 @@
           class="w-100"
           :placeholder="placeholder"
           ref="textareaRef"
+          v-autofocus
         />
       </p>
       <div class="card-footer text-right">
@@ -58,5 +59,13 @@ const focusTextarea = () => {
 
 defineExpose({
   focusTextarea,
-});
+})
+
+// directives
+
+const vAutofocus = {
+  mounted: (el) => {
+    el.focus()
+  }
+}
 </script>

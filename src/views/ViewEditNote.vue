@@ -1,6 +1,6 @@
 <template>
   <div class="edit-note">
-    <AddEditNote 
+    <AddEditNote
       v-model="noteContent"
       bgColor="info"
       placeholder="Edit note"
@@ -8,19 +8,17 @@
       ref="addEditNoteRef"
     >
       <template #buttons>
-        <RouterLink
-          to="/" 
-          class="btn btn-danger mr-3"
-        >
+        <RouterLink @click="$router.back()" to="/" class="btn btn-danger mr-2">
           Cancel
         </RouterLink>
 
-        <button 
-          class="btn btn-primary mr-3"
+        <button
+          @click="handleSaveClick"
+          class="btn btn-primary"
           :disabled="!noteContent"
         >
           Save Note
-        </button> 
+        </button>
       </template>
     </AddEditNote>
   </div>
@@ -32,9 +30,30 @@
 */
 
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import AddEditNote from "@/components/Notes/AddEditNote.vue";
+import { useStoreNotes } from "@/stores/storeNotes";
+
+// router
+
+const route = useRoute();
+const router = useRouter()
+
+// store
+
+const storeNotes = useStoreNotes();
 
 // Note
 
 const noteContent = ref("");
+
+noteContent.value = storeNotes.getNoteContent(route.params.id);
+
+// save clicked
+
+const handleSaveClick = () => {
+  storeNotes.updateNote(route.params.id, noteContent.value)
+  router.push('/')
+};
+
 </script>
